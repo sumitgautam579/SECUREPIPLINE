@@ -123,6 +123,12 @@ resource "aws_instance" "web" {
   iam_instance_profile = "${aws_iam_instance_profile.test_profile.name}"
   security_groups = [aws_security_group.jenkins_sg.name]
   user_data       = "${file("install_jenkins.sh")}"
+
+   root_block_device {
+    volume_size = 29
+    volume_type = "gp3"
+  }
+  
   tags = {
     Name = "Jenkins"
   }

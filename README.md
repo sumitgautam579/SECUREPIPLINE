@@ -12,12 +12,16 @@ terraform init
 
 ## Step 1: Plan Resources
 ```
-terraform plan -var-file="vars/dev-west-2.tfvars"
+terraform plan -var-file="vars/dev-ap-south.tfvars" -out=tfplan
 ```
 
 ## Step 2: Apply Resources
 ```
-terraform apply -var-file="vars/dev-west-2.tfvars"
+terraform apply tfplan
+```
+## destroy
+```
+terraform destroy -var-file="ars/dev-ap-south.tfvars"
 ```
 
 ## Step 3: Commands to get the Jenkins admin password via command line
