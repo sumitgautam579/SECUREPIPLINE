@@ -118,7 +118,7 @@ EOF
 
 resource "aws_instance" "web" {
   ami             = data.aws_ami.amazon_linux.id
-  instance_type   = "t3.micro" 
+  instance_type   = "c7i-flex.large" 
   key_name        = var.key_name
   iam_instance_profile = "${aws_iam_instance_profile.test_profile.name}"
   security_groups = [aws_security_group.jenkins_sg.name]
@@ -130,7 +130,7 @@ resource "aws_instance" "web" {
   }
   
   tags = {
-    Name = "Jenkins"
+    Name = "Jenkins_1"
   }
 }
 
