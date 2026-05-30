@@ -8,14 +8,15 @@ sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
 sudo yum upgrade -y
 #sudo yum install jenkins java-1.8.0-openjdk-devel -y
 #sudo amazon-linux-extras install java-openjdk11
-#Java 17 installed and old Java versions commented out
-sudo dnf install java-17-amazon-corretto-devel -y
+#Java 21 installed and old Java versions commented out
+sudo dnf install java-21-amazon-corretto -y
+sudo alternatives --set java /usr/lib/jvm/java-21-amazon-corretto/bin/java
 sudo yum install git -y
 sudo yum install nodejs npm -y
 sudo wget http://repos.fedorapeople.org/repos/dchen/apache-maven/epel-apache-maven.repo -O /etc/yum.repos.d/epel-apache-maven.repo
 sudo sed -i s/\$releasever/6/g /etc/yum.repos.d/epel-apache-maven.repo
 sudo yum install maven -y
-sudo update-alternatives --set java /usr/lib/jvm/java-17-amazon-corretto.x86_64/bin/java
+
 sudo yum install jenkins -y
 sudo sed -i -e 's/Environment="JENKINS_PORT=[0-9]\+"/Environment="JENKINS_PORT=8081"/' /usr/lib/systemd/system/jenkins.service
 sudo systemctl daemon-reload
@@ -26,7 +27,7 @@ sudo yum install unzip -y
 sudo unzip awscliv2.zip  
 sudo ./aws/install
 #ZAP is installed and can be run as zap.sh
-sudo wget https://github.com/zaproxy/zaproxy/releases/download/v2.14.0/ZAP_2_14_0_unix.sh
+sudo wget https://github.com/zaproxy/zaproxy/releases/download/v2.17.0/ZAP_2.17.0_Linux.tar.gz
 sudo chmod +x ZAP_2_14_0_unix.sh 
 sudo ./ZAP_2_14_0_unix.sh -q
 curl -o kubectl https://s3.us-west-2.amazonaws.com/amazon-eks/1.23.7/2022-06-29/bin/linux/amd64/kubectl

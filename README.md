@@ -21,7 +21,7 @@ terraform apply tfplan
 ```
 ## destroy
 ```
-terraform destroy -var-file="ars/dev-ap-south.tfvars"
+terraform destroy -var-file="vars/dev-ap-south.tfvars"
 ```
 
 ## Step 3: Commands to get the Jenkins admin password via command line

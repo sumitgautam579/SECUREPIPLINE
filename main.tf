@@ -75,6 +75,7 @@ data "aws_ami" "amazon_linux" {
 
 resource "aws_iam_role" "test_role" {
   name = "test_role"
+  force_detach_policies = true
 
   assume_role_policy = <<EOF
 {
@@ -118,19 +119,28 @@ EOF
 
 resource "aws_instance" "web" {
   ami             = data.aws_ami.amazon_linux.id
-  instance_type   = "t3.micro" 
+  instance_type   = "c7i-flex.large" 
   key_name        = var.key_name
   iam_instance_profile = "${aws_iam_instance_profile.test_profile.name}"
-  security_groups = [aws_security_group.jenkins_sg.name]
+  vpc_security_group_ids = [aws_security_group.jenkins_sg.id]
   user_data       = "${file("install_jenkins.sh")}"
+
+   instance_market_options {
+    market_type = "spot"
+    spot_options {
+      instance_interruption_behavior = "terminate"  # not "stop" or "hibernate"
+      spot_instance_type             = "one-time"
+    }
+  }
 
    root_block_device {
     volume_size = 29
     volume_type = "gp3"
+    delete_on_termination = true
   }
   
   tags = {
-    Name = "Jenkins"
+    Name = "Jenkins_1"
   }
 }
 
